@@ -35,7 +35,7 @@ describe Admin::CategoriesController do
   end
   
   
-  # New Rspec Test for create 
+  # Rspec Test for create 
   it "test_create" do
     post :new, :category => { name: 'category testing', keywords: 'test', permalink: 'test', description: 'test' }
     assert_response :redirect, :action => 'index'
@@ -43,7 +43,7 @@ describe Admin::CategoriesController do
     assert_not_nil new_category
   end
 
-  # New Rspec test to edit an existing category 
+  # Rspec test to edit category 
   it 'should edit an existing category' do
      post :edit, :category =>{:name => "category testing", :keywords => "test", :permalink => "test", :description => "test"}
     assert_response :redirect, :action => "index"

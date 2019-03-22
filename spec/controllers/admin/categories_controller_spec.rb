@@ -15,6 +15,24 @@ describe Admin::CategoriesController do
     get :index
     assert_response :redirect, :action => 'index'
   end
+  
+  
+  describe "test_create" do
+     before(:each) do
+      get :new
+    end
+     it 'should render template new' do
+      assert_template 'new'
+      assert_tag :tag => "table",
+        :attributes => { :id => "category_container" }
+    end
+     it 'should create a new category' do
+      post :edit, :category =>{:name => "sports", :keywords => "cricket", :permalink => "linkc", :description => "desc"}
+      assert_response :redirect, :action => "index"
+      expect(assigns(:category)).not_to be_nil
+      expect(flash[:notice]).to eq("Category was successfully saved.")
+    end
+  end
 
   describe "test_edit" do
     before(:each) do
@@ -35,21 +53,8 @@ describe Admin::CategoriesController do
   end
   
   
-  # Rspec Test for create 
-  it "test_create" do
-    post :new, :category => { name: 'category testing', keywords: 'test', permalink: 'test', description: 'test' }
-    assert_response :redirect, :action => 'index'
-    new_category = Category.find_by_name("category testing")
-    assert_not_nil new_category
-  end
+  
 
-  # Rspec test to edit category 
-  it 'should edit an existing category' do
-     post :edit, :category =>{:name => "category testing", :keywords => "test", :permalink => "test", :description => "test"}
-    assert_response :redirect, :action => "index"
-    assert_not_nil assigns(:category)
-    expect(flash[:notice]).to eq("Category was successfully saved.")
-  end
 
 
 
